@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shared To-Do App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Sidebar for Filter/Sort -->
+    <aside class="sidebar">
+      <h2>Filters</h2>
+      <form id="filter-form">
+        <div>
+          <label for="filter-person">Person:</label>
+          <select id="filter-person">
+            <option value="all">All</option>
+            <option value="me">Me</option>
+            <option value="partner">Partner</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="filter-category">Category:</label>
+          <select id="filter-category">
+            <option value="all">All</option>
+            <option value="home">Home</option>
+            <option value="work">Work</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="filter-date">Sort by date:</label>
+          <select id="filter-date">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
+
+        <button type="submit">Apply Filters</button>
+      </form>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Task Input Form -->
+      <section class="task-form-section">
+        <h1>Add a Task</h1>
+        <form id="task-form">
+          <input type="text" id="task-title" placeholder="Task title" required />
+          
+          <select id="task-category" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="home">Home</option>
+            <option value="work">Work</option>
+          </select>
+
+          <select id="task-person" required>
+            <option value="" disabled selected>Assign to</option>
+            <option value="me">Me</option>
+            <option value="partner">Partner</option>
+          </select>
+
+          <label>
+            <input type="checkbox" id="task-repeat" />
+            Repeat
+          </label>
+
+          <select id="task-repeat-type" disabled>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+          </select>
+
+          <button type="submit">Add Task</button>
+        </form>
+      </section>
+
+      <!-- Task Display Area -->
+      <section class="task-list-section">
+        <h2>Tasks</h2>
+        <div id="task-list">
+          <!-- JS will populate this area with tasks -->
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
