@@ -152,4 +152,9 @@
     color: #4a90e2;
     margin-top: 4px;
   }
+
+  .completed-task h3 {
+    text-decoration: line-through;
+    color: gray;
+}
   

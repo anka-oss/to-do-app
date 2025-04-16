@@ -1,4 +1,6 @@
 let tasks = []; //Array of task objects
+const repeatCheckbox = document.getElementById('task-repeat');
+const repeatSelect = document.getElementById('task-repeat-type');
 
 function saveTasksToLocalStorage() {
     localStorage.setItem('todoTasks', JSON.stringify(tasks));
@@ -14,7 +16,7 @@ function handleRepetition() {
     const newTasks = [];
 
     tasks.forEach(task => {
-        if (task.repeat && Date(task.dueDate) < new Date(today)) {
+        if (task.repeat && new Date(task.dueDate) < new Date(today)) {
             let nextDate = new Date(task.dueDate);
 
             switch (task.repeat) {
@@ -39,7 +41,7 @@ function handleRepetition() {
                 completed: false
             };
 
-            newTasks.puch(repeatedTask);
+            newTasks.push(repeatedTask);
         }
     });
 
@@ -55,12 +57,16 @@ function renderTasks() {
 
     tasks.forEach(task => {
         const taskItem = document.createElement('div');
+        if (task.completed) taskItem.classList.add('completed-task');
         taskItem.classList.add('task-item');
 
         taskItem.innerHTML = `
             <div class="task header">
                 <h3>${task.title}</h3>
-                <button class="complete-btn" data-id="${task.id}">
+                <label>
+                    <input type="checkbox" class="complete-checkbox" data-id="${task.id}" ${task.completed ? 'checked' : ''}>
+                    Completed
+                </label>
             </div>
             <p><strong>Category:</strong> ${task.category}</p>
             <p><strong>Assigned to:</strong> ${task.assignedTo}</p>
@@ -78,12 +84,28 @@ function renderTasks() {
 
         taskList.appendChild(taskItem);
     });
+
+    document.querySelectorAll('.complete-checkbox').forEach(button => {
+        button.addEventListener('change', function () {
+            const taskId = Number(this.getAttribute('data-id'));
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasksToLocalStorage();
+                renderTasks(); // refresh UI
+            }
+        });
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     loadTasksFromLocalStorage();
     handleRepetition();
     renderTasks();
+  
+    repeatCheckbox.addEventListener('change', () => {
+      repeatSelect.disabled = !repeatCheckbox.checked;
+    });
 });
 
 document.getElementById('task-form').addEventListener('submit', function (e) {
@@ -115,23 +137,6 @@ document.getElementById('task-form').addEventListener('submit', function (e) {
 });
 
 document.getElementById('task-repeat').addEventListener('change', function() {
-    document.getElementById('task-repeat-type').disable = !this.ariaChecked;
+    document.getElementById('task-repeat-type').disabled = !this.checked;
 });
 
-repeatCheckbox.addEventListener('change', () => {
-    if (repeatCheckbox.checked) {
-      repeatTypeSelect.disabled = false;
-    } else {
-      repeatTypeSelect.disabled = true;
-      repeatTypeSelect.selectedIndex = 0;
-    }
-  });  
-
-document.addEventListener('DOMContentLoaded', () => {
-    const repeatCheckbox = document.getElementById('task-repeat');
-    const repeatTypeSelect = document.getElementById('task-repeat-type');
-  
-    repeatCheckbox.addEventListener('change', () => {
-      repeatTypeSelect.disabled = !repeatCheckbox.checked;
-    });
-});
