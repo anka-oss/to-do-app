@@ -53,15 +53,8 @@
         <h1>Add a Task</h1>
         <form id="task-form">
           <input type="text" id="task-title" placeholder="Task title" required />
+          <input type="date" id="task-date" required />
           
-          <select id="task-category" required>
-            <option value="" disabled selected>Select category</option>
-            <option value="home">Home</option>
-            <option value="baby">Baby</option>
-            <option value="dogs">Dogs</option>
-            <option value="other">Other</option>
-          </select>
-
           <select id="task-person" required>
             <option value="" disabled selected>Assign to</option>
             <option value="Ania">Ania</option>
@@ -80,6 +73,15 @@
             <option value="monthly">Monthly</option>
           </select>
 
+          <select id="task-category" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="home">Home</option>
+            <option value="baby">Baby</option>
+            <option value="dogs">Dogs</option>
+            <option value="other">Other</option>
+          </select>
+
+
           <button type="submit">Add Task</button>
         </form>
       </section>
@@ -87,7 +89,7 @@
       <!-- Task Display Area -->
       <section class="task-list-section">
         <h2>Tasks</h2>
-        <div id="task-list">
+        <div id="taskList" class="task-list">
           <!-- JS will populate this area with tasks -->
         </div>
       </section>
