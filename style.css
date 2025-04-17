@@ -52,7 +52,8 @@
     border-radius: 4px;
   }
   
-  .sidebar button {
+  .sidebar button,
+  .delete-task {
     padding: 8px 12px;
     background-color: #007bff;
     color: white;
@@ -157,4 +158,4 @@
     text-decoration: line-through;
     color: gray;
 }
-  
+
