@@ -11,6 +11,13 @@ function loadTasksFromLocalStorage() {
     tasks = stored ? JSON.parse(stored) : [];
 }
 
+function removeTasksFromLocalStorage(taskId) {
+    const stored = localStorage.getItem('todoTasks');
+    const updatedTasks = tasks.filter(task => task.id !== taskId);
+    tasks = updatedTasks;
+    saveTasksToLocalStorage();
+}
+
 function handleRepetition() {
     const today = new Date().toISOString().split('T')[0];
     const newTasks = [];
@@ -73,6 +80,7 @@ function renderTasks() {
             <p><strong>Due:</strong> ${task.dueDate}</p>
             <p><strong>Repeats:</strong> ${task.repeat ? 'Yes' : 'No'}</p>
             <p><strong>Status:</strong> ${task.completed ? 'Completed' : 'Not done'}</p>
+            <button type="button" class="delete-task" data-id="${task.id}">Delete</button>
         `;
 
         if (task.repeat) {
@@ -94,6 +102,15 @@ function renderTasks() {
                 saveTasksToLocalStorage();
                 renderTasks(); // refresh UI
             }
+        });
+    });
+
+    document.querySelectorAll('.delete-task').forEach(button => {
+        button.addEventListener('click', function() {
+            const taskId = Number(this.getAttribute('data-id'));
+            const task = tasks.find(t => t.id === taskId);
+            removeTasksFromLocalStorage(taskId);
+            renderTasks();
         });
     });
 }

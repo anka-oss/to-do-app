@@ -15,7 +15,7 @@
       <form id="filter-form">
         <div>
           <label for="filter-person">Person:</label>
-          <select id="filter-person">
+          <select id="filter-person" name="filterPerson">
             <option value="all">All</option>
             <option value="Ania">Ania</option>
             <option value="Jacek">Jacek</option>
@@ -24,7 +24,7 @@
 
         <div>
           <label for="filter-category">Category:</label>
-          <select id="filter-category">
+          <select id="filter-category" name="filterCateory">
             <option value="all">All</option>
             <option value="home">Home</option>
             <option value="baby">Baby</option>
@@ -35,7 +35,7 @@
 
         <div>
           <label for="filter-date">Sort by date:</label>
-          <select id="filter-date">
+          <select id="filter-date" name="filterDate">
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>
           </select>
@@ -52,28 +52,28 @@
       <section class="task-form-section">
         <h1>Add a Task</h1>
         <form id="task-form">
-          <input type="text" id="task-title" placeholder="Task title" required />
-          <input type="date" id="task-date" required />
+          <input type="text" id="task-title"  name="title" placeholder="Task title" required />
+          <input type="date" id="task-date" name="date" required />
           
-          <select id="task-person" required>
+          <select id="task-person" name="person" required>
             <option value="" disabled selected>Assign to</option>
             <option value="Ania">Ania</option>
             <option value="Jacek">Jacek</option>
           </select>
 
           <label>
-            <input type="checkbox" id="task-repeat" />
+            <input type="checkbox" id="task-repeat" name="task-repeat" />
             Repeat
           </label>
 
-          <select id="task-repeat-type" disabled>
+          <select id="task-repeat-type" name="repeatType" disabled>
             <option value="daily">Daily</option>
             <option value="second">Every Second Day</option>
             <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
           </select>
 
-          <select id="task-category" required>
+          <select id="task-category" name="category" required>
             <option value="" disabled selected>Select category</option>
             <option value="home">Home</option>
             <option value="baby">Baby</option>
