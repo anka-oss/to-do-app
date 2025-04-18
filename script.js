@@ -68,12 +68,18 @@ function applyFilters(personFilter, categoryFilter, dateFilter) {
 
     // Apply date sorting
     if (dateFilter === "newest") {
-        filteredTasks.sort((a, b) => new Date(b.dueDate) - new Date(a.dueDate));
-    } else if (dateFilter === "oldest") {
         filteredTasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    } else if (dateFilter === "oldest") {
+        filteredTasks.sort((a, b) => new Date(b.dueDate) - new Date(a.dueDate));
     }
 
     renderTasks(filteredTasks); // Show only the filtered & sorted tasks
+}
+
+function applyTodayOnlyFilter() {
+    const today = new Date().toISOString().split('T')[0];
+    const todaysTask = tasks.filter(task => task.dueDate === today);
+    renderTasks(todaysTask);
 }
 
 
@@ -104,7 +110,7 @@ function renderTasks(tasksToRender = tasks) {
     const taskList = document.getElementById('taskList');
     taskList.innerHTML = '';
 
-    tasks.forEach(task => {
+    tasksToRender.forEach(task => {
         const taskItem = document.createElement('div');
         if (task.completed) taskItem.classList.add('completed-task');
         taskItem.classList.add('task-item');
@@ -142,6 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTasksFromLocalStorage();
     renderTasks();
     handleRepetition();
+
   
     repeatCheckbox.addEventListener('change', () => {
       repeatSelect.disabled = !repeatCheckbox.checked;
@@ -196,5 +203,13 @@ document.getElementById('task-form').addEventListener('submit', function (e) {
 
 document.getElementById('task-repeat').addEventListener('change', function() {
     document.getElementById('task-repeat-type').disabled = !this.checked;
+});
+
+document.getElementById('today-only').addEventListener('change', function () {
+    if (this.checked) {
+        applyTodayOnlyFilter();
+    } else {
+        renderTasks(); // show all tasks again
+    }
 });
 

@@ -36,12 +36,13 @@
         <div>
           <label for="filter-date">Sort by date:</label>
           <select id="filter-date" name="filterDate">
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
+            <option value="newest">For Now</option>
+            <option value="oldest">For the Future</option>
           </select>
         </div>
 
         <button type="submit">Apply Filters</button>
+        <button type="reset">Reset Filters</button>
       </form>
     </aside>
 
@@ -89,6 +90,10 @@
       <!-- Task Display Area -->
       <section class="task-list-section">
         <h2>Tasks</h2>
+        <label> 
+            <input type="checkbox" id="today-only" name="today-only" />
+            Only today's tasks
+        </label> 
         <div id="taskList" class="task-list">
           <!-- JS will populate this area with tasks -->
         </div>
