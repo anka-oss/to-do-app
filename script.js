@@ -58,7 +58,49 @@ function handleRepetition() {
     }
 }
 
-function renderTasks() {
+function applyFilters(personFilter, categoryFilter, dateFilter) {
+    let filteredTasks = tasks.filter(task => {
+        // Apply person and category filters
+        const matchesPerson = personFilter === "all" || task.assignedTo === personFilter;
+        const matchesCategory = categoryFilter === "all" || task.category === categoryFilter;
+        return matchesPerson && matchesCategory;
+    });
+
+    // Apply date sorting
+    if (dateFilter === "newest") {
+        filteredTasks.sort((a, b) => new Date(b.dueDate) - new Date(a.dueDate));
+    } else if (dateFilter === "oldest") {
+        filteredTasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+    }
+
+    renderTasks(filteredTasks); // Show only the filtered & sorted tasks
+}
+
+
+function attachEventListeners() {
+    document.querySelectorAll('.complete-checkbox').forEach(button => {
+        button.addEventListener('change', function () {
+            const taskId = Number(this.getAttribute('data-id'));
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasksToLocalStorage();
+                renderTasks(); // refresh UI
+            }
+        });
+    });
+
+    document.querySelectorAll('.delete-task').forEach(button => {
+        button.addEventListener('click', function () {
+            const taskId = Number(this.getAttribute('data-id'));
+            removeTasksFromLocalStorage(taskId);
+            renderTasks();
+        });
+    });
+}
+
+
+function renderTasks(tasksToRender = tasks) {
     const taskList = document.getElementById('taskList');
     taskList.innerHTML = '';
 
@@ -93,36 +135,35 @@ function renderTasks() {
         taskList.appendChild(taskItem);
     });
 
-    document.querySelectorAll('.complete-checkbox').forEach(button => {
-        button.addEventListener('change', function () {
-            const taskId = Number(this.getAttribute('data-id'));
-            const task = tasks.find(t => t.id === taskId);
-            if (task) {
-                task.completed = !task.completed;
-                saveTasksToLocalStorage();
-                renderTasks(); // refresh UI
-            }
-        });
-    });
-
-    document.querySelectorAll('.delete-task').forEach(button => {
-        button.addEventListener('click', function() {
-            const taskId = Number(this.getAttribute('data-id'));
-            const task = tasks.find(t => t.id === taskId);
-            removeTasksFromLocalStorage(taskId);
-            renderTasks();
-        });
-    });
+    attachEventListeners();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     loadTasksFromLocalStorage();
-    handleRepetition();
     renderTasks();
+    handleRepetition();
   
     repeatCheckbox.addEventListener('change', () => {
       repeatSelect.disabled = !repeatCheckbox.checked;
     });
+
+    const filterForm = document.getElementById('filter-form');
+
+    
+    filterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+    
+        const filterPerson = document.getElementById('filter-person');
+        const filterCategory = document.getElementById('filter-category');
+        const filterDate = document.getElementById('filter-date');
+    
+        const personFilter = filterPerson.value;
+        const categoryFilter = filterCategory.value;
+        const dateFilter = filterDate.value;
+    
+        applyFilters(personFilter, categoryFilter, dateFilter);
+    });
+
 });
 
 document.getElementById('task-form').addEventListener('submit', function (e) {
