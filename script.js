@@ -1,21 +1,32 @@
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+import { getDatabase, ref, set, get, remove } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDnLamkbCtAqLYfFJfdIE2SNCv1T9pk2X0",
+    authDomain: "ann-sharedtodoapp.firebaseapp.com",
+    projectId: "ann-sharedtodoapp",
+    storageBucket: "ann-sharedtodoapp.firebasestorage.app",
+    messagingSenderId: "760666010000",
+    appId: "1:760666010000:web:268ec83f0639296cdb8315",
+    measurementId: "G-SEHX4H9D11"
+};
+
+const app = firebase.initializeApp(firebaseConfig);
+const db  = firebase.database(app);
+const analytics = firebase.analytics(app);
+
 let tasks = []; //Array of task objects
 const repeatCheckbox = document.getElementById('task-repeat');
 const repeatSelect = document.getElementById('task-repeat-type');
 
-function saveTasksToLocalStorage() {
-    localStorage.setItem('todoTasks', JSON.stringify(tasks));
+function saveTaskToFirebase(task) {
+    firebase.database().ref('tasks/' + task.id).set(task);
 }
 
-function loadTasksFromLocalStorage() {
-    const stored = localStorage.getItem('todoTasks');
-    tasks = stored ? JSON.parse(stored) : [];
-}
-
-function removeTasksFromLocalStorage(taskId) {
-    const stored = localStorage.getItem('todoTasks');
-    const updatedTasks = tasks.filter(task => task.id !== taskId);
-    tasks = updatedTasks;
-    saveTasksToLocalStorage();
+function removeTaskFromFirebase(taskId) {
+    firebase.database().ref('tasks/' + taskId).remove();
 }
 
 function handleRepetition() {
@@ -48,15 +59,10 @@ function handleRepetition() {
                 completed: false
             };
 
-            newTasks.push(repeatedTask);
+            saveTaskToFirebase(repeatedTask);
         }
     });
-
-    if (newTasks.length > 0) {
-        tasks = tasks.concat(newTasks);
-        saveTasksToLocalStorage();    
-    }
-}
+}       
 
 function applyFilters(personFilter, categoryFilter, dateFilter) {
     let filteredTasks = tasks.filter(task => {
@@ -90,7 +96,7 @@ function attachEventListeners() {
             const task = tasks.find(t => t.id === taskId);
             if (task) {
                 task.completed = !task.completed;
-                saveTasksToLocalStorage();
+                saveTaskToFirebase(task);
                 renderTasks(); // refresh UI
             }
         });
@@ -99,7 +105,7 @@ function attachEventListeners() {
     document.querySelectorAll('.delete-task').forEach(button => {
         button.addEventListener('click', function () {
             const taskId = Number(this.getAttribute('data-id'));
-            removeTasksFromLocalStorage(taskId);
+            removeTaskFromFirebase(taskId);
             renderTasks();
         });
     });
@@ -144,12 +150,9 @@ function renderTasks(tasksToRender = tasks) {
     attachEventListeners();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadTasksFromLocalStorage();
-    renderTasks();
-    handleRepetition();
+let hasCheckedRepetition = false;
 
-  
+document.addEventListener('DOMContentLoaded', () => {
     repeatCheckbox.addEventListener('change', () => {
       repeatSelect.disabled = !repeatCheckbox.checked;
     });
@@ -169,8 +172,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const dateFilter = filterDate.value;
     
         applyFilters(personFilter, categoryFilter, dateFilter);
+
+        filterForm.reset();
     });
 
+    const resetBtn = document.getElementById('reset-filters');
+    resetBtn.addEventListener('click', () => {
+        filterForm.reset();   // clear all fields
+        renderTasks();        // show all tasks again
+    });
+
+    // Realtime sync from Firebase (for Realtime Database)
+    firebase.database().ref('tasks').on('value', (snapshot) => {
+        tasks = [];
+        snapshot.forEach(child => {
+            tasks.push(child.val());
+        });
+    
+        if (!hasCheckedRepetition) {
+            handleRepetition();            // ✅ only run once
+            hasCheckedRepetition = true;  // ✅ prevent further repeats
+        }
+    
+        renderTasks();
+    });
 });
 
 document.getElementById('task-form').addEventListener('submit', function (e) {
@@ -193,10 +218,7 @@ document.getElementById('task-form').addEventListener('submit', function (e) {
         completed: false
     };
 
-    tasks.push(newTask);
-
-    saveTasksToLocalStorage();
-    renderTasks();
+    saveTaskToFirebase(newTask);
     
     e.target.reset();
 });
@@ -212,4 +234,3 @@ document.getElementById('today-only').addEventListener('change', function () {
         renderTasks(); // show all tasks again
     }
 });
-
