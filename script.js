@@ -132,7 +132,7 @@ function attachEventListeners() {
         const task = tasks.find(t => t.id === taskId);
         if (task) {
           task.completed = !task.completed;
-          saveTasksToFirebase(task);
+          saveTaskToFirebase(task);
           renderTasks(); // refresh UI
         }
       });
