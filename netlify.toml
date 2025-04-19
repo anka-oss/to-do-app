@@ -1,0 +1,11 @@
+[build]
+  publish = "."  # Folder to deploy (root directory)
+  command = "echo 'No build step needed for static site'"  # No build command
+
+[build.environment]
+  NODE_VERSION = "18"  # Use latest Node.js version if needed
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
