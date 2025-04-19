@@ -11,43 +11,55 @@
     
     <!-- Sidebar for Filter/Sort -->
     <aside class="sidebar">
-      <h2>Filters</h2>
-      <form id="filter-form">
-        <div>
-          <label for="filter-person">Person:</label>
-          <select id="filter-person" name="filterPerson">
-            <option value="all">All</option>
-            <option value="Ania">Ania</option>
-            <option value="Jacek">Jacek</option>
-          </select>
-        </div>
+        <button id="logout-btn" style="display: none;">Logout</button>
 
-        <div>
-          <label for="filter-category">Category:</label>
-          <select id="filter-category" name="filterCategory">
-            <option value="all">All</option>
-            <option value="home">Home</option>
-            <option value="baby">Baby</option>
-            <option value="dogs">Dogs</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
+        <section id="auth-section">
+            <h2>Login or Sign Up</h2>
+            <input type="email" id="auth-email" placeholder="Email" autofocus/>
+            <input type="password" id="auth-password" placeholder="Password" />
+            <button id="login-btn">Login</button>
+            <button id="signup-btn">Sign Up</button>
+        </section>
 
-        <div>
-          <label for="filter-date">Sort by date:</label>
-          <select id="filter-date" name="filterDate">
-            <option value="newest">For Now</option>
-            <option value="oldest">For the Future</option>
-          </select>
-        </div>
+        <section id="filter-section" class="hidden">
+            <h2>Filters</h2>
+            <form id="filter-form">
+                <div>
+                <label for="filter-person">Person:</label>
+                <select id="filter-person" name="filterPerson">
+                    <option value="all">All</option>
+                    <option value="Ania">Ania</option>
+                    <option value="Jacek">Jacek</option>
+                </select>
+                </div>
 
-        <button type="submit">Apply Filters</button>
-        <button type="reset">Reset Filters</button>
-      </form>
+                <div>
+                <label for="filter-category">Category:</label>
+                <select id="filter-category" name="filterCategory">
+                    <option value="all">All</option>
+                    <option value="home">Home</option>
+                    <option value="baby">Baby</option>
+                    <option value="dogs">Dogs</option>
+                    <option value="other">Other</option>
+                </select>
+                </div>
+
+                <div>
+                <label for="filter-date">Sort by date:</label>
+                <select id="filter-date" name="filterDate">
+                    <option value="newest">For Now</option>
+                    <option value="oldest">For the Future</option>
+                </select>
+                </div>
+
+                <button type="submit">Apply Filters</button>
+                <button type="submit" id="reset-filters">Reset Filters</button> 
+            </form>
+        </section>
     </aside>
 
     <!-- Main Content Area -->
-    <main class="main-content">
+    <main class="main-content hidden">
       
       <!-- Task Input Form -->
       <section class="task-form-section">

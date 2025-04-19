@@ -12,6 +12,22 @@ body {
     color: #333;
     line-height: 1.6;
     padding: 20px;
+    /* visibility: hidden; */
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+body.loading .main-content {
+    display: none !important;
+}
+
+body.loading #auth-section {
+    display: none !important;
 }
   
 .app-container {
@@ -157,3 +173,4 @@ body {
 .completed-task {
     display: none;
 }
+
