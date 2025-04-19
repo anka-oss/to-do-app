@@ -79,7 +79,7 @@ function handleRepetition() {
   
     if (newTasks.length > 0) {
       tasks = tasks.concat(newTasks);
-      saveTasksToFirebase(newTasks); // Save new tasks to Firebase
+      saveTaskToFirebase(newTasks); // Save new tasks to Firebase
     }
 }     
 
@@ -150,7 +150,7 @@ function attachEventListeners() {
 
 function renderTasks(tasksToRender = tasks) {
     const taskList = document.getElementById('taskList');
-    taskList.innerHTML = ''; // Clear existing tasks
+    taskList.innerHTML = ''; 
   
     tasksToRender.forEach(task => {
       const taskItem = document.createElement('div');
@@ -233,11 +233,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const logoutBtn = document.getElementById('logout-btn');
     
         if (user) {
-        console.log("User is signed in:", user.email);
+            console.log("User is signed in:", user.email);
+
+            document.getElementById('auth-email').value = '';
+            document.getElementById('auth-password').value = '';
+
             logoutBtn.style.display = 'block';
             authSection.style.display = 'none';
             mainContent.classList.remove('hidden');
             filterSection.classList.remove('hidden');
+            
             syncTasksFromFirebase();
             renderTasks();
         } else {
@@ -308,6 +313,8 @@ document.getElementById('task-form').addEventListener('submit', function (e) {
     saveTaskToFirebase(newTask);
     
     e.target.reset();
+
+    repeatSelect.disabled = true;
 });
 
 document.getElementById('task-repeat').addEventListener('change', function() {
