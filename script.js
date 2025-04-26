@@ -160,16 +160,17 @@ function renderTasks(tasksToRender = tasks) {
       taskItem.innerHTML = `
         <div class="task header">
           <h3>${task.title}</h3>
-          <label>
-            <input type="checkbox" class="complete-checkbox" data-id="${task.id}" ${task.completed ? 'checked' : ''}>
-            Completed
-          </label>
         </div>
         <p><strong>Category:</strong> ${task.category}</p>
         <p><strong>Assigned to:</strong> ${task.assignedTo}</p>
         <p><strong>Due:</strong> ${task.dueDate}</p>
         <p><strong>Repeats:</strong> ${task.repeat ? 'Yes' : 'No'}</p>
-        <p><strong>Status:</strong> ${task.completed ? 'Completed' : 'Not done'}</p>
+        <div>
+          <label>
+              <input type="checkbox" class="complete-checkbox" data-id="${task.id}" ${task.completed ? 'checked' : ''}>
+              Completed
+            </label>
+        </div>
         <button type="button" class="delete-task" data-id="${task.id}">Delete</button>
       `;
   
@@ -192,16 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const emailInput = document.getElementById('auth-email');
     const passwordInput = document.getElementById('auth-password');
-
-    document.getElementById('signup-btn').addEventListener('click', () => {
-        createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
-        .then(userCredential => showMessage('Signed up!'))
-        .catch(error => {
-            showMessage('Someting went wrong!');
-            passwordInput.value = '';
-            setTimeout(() => emailInput.focus(), 100);
-        });
-    });
 
     document.getElementById('login-btn').addEventListener('click', () => {
         signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)

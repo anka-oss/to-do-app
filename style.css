@@ -9,10 +9,9 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f4f4;
-    color: #333;
+    color: #33292F;
     line-height: 1.6;
-    padding: 20px;
-    /* visibility: hidden; */
+    padding: 1rem;
 }
 
 .hidden {
@@ -31,56 +30,67 @@ body.loading #auth-section {
 }
   
 .app-container {
-    display: grid;
-    grid-template-columns: 250px 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
 }
   
   /* Sidebar */
+
+.sidebar button,
+.delete-task {
+    margin-top: 1rem;
+    padding: 0.5rem 0.75rem;
+    background-color: #8C5372;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+#logout-btn,
+.delete-task {
+    background-color: #BF4B8B;
+}
+
+#logout-btn {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+#login-btn {
+    margin-top: 1rem; 
+}
+
 .sidebar {
     background-color: #fff;
-    padding: 20px;
+    padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
   
 .sidebar h2 {
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
     font-size: 1.2rem;
 }
   
 .sidebar form > div {
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
 }
   
 .sidebar label {
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem;
     font-weight: bold;
 }
   
 .sidebar select {
     width: 100%;
-    padding: 6px;
+    padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
-  
-.sidebar button,
-.delete-task {
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
-  
-.sidebar button:hover {
-    background-color: #0056b3;
 }
   
   /* Main Content */
@@ -93,7 +103,7 @@ body.loading #auth-section {
   /* Task Form */
 .task-form-section {
     background-color: #fff;
-    padding: 20px;
+    padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
@@ -109,10 +119,10 @@ body.loading #auth-section {
     align-items: center;
 }
   
-#task-form input[type="text"],
-#task-form input[type="date"],
-#task-form select {
-    padding: 8px;
+.input-field {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0.5rem;
+    margin: 4px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -125,20 +135,19 @@ body.loading #auth-section {
   
 #task-form button {
     padding: 10px;
-    grid-column: span 2;
-    background-color: #28a745;
+    grid-column: 1/-1;
+    background-color: #594751;
     color: white;
     border: none;
     border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-}
-  
-#task-form button:hover {
-    background-color: #218838;
 }
   
   /* Task List */
+
+#today-only {
+    margin-bottom: 1.5rem;
+}
+
 .task-list-section {
     background-color: #fff;
     padding: 20px;
@@ -147,7 +156,7 @@ body.loading #auth-section {
 }
   
 .task-list-section h2 {
-    margin-bottom: 16px;
+    margin-bottom: 0.5rem;
 }
   
 #taskList {
@@ -158,19 +167,51 @@ body.loading #auth-section {
   
   /* Individual Task Item (placeholder styling for now) */
 .task-item {
-    background-color: #eef;
+    background-color: rgba(140, 83, 114, 0.1);
     padding: 12px;
     border-radius: 6px;
-    border-left: 5px solid #007bff;
+    border-left: 5px solid #8C5372;
 }
 
 .repeat-tag {
     font-size: 0.9em;
-    color: #4a90e2;
+    color: #BF4B8B;
     margin-top: 4px;
+}
+
+.complete-checkbox {
+    margin-top: 1rem;
 }
 
 .completed-task {
     display: none;
 }
 
+@media (min-width: 768px) {
+    .app-container {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 20px;
+    }
+}
+
+@media (min-width: 992px) {
+    .sidebar button,
+    .delete-task,
+    .logout-btn {
+        cursor: pointer;
+    }
+
+    .sidebar button:hover {
+        background-color: #BF4B8B;
+    }
+
+    #task-form button:hover {
+        background-color: #331F2A;
+    }
+
+    #task-form button {
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+    }
+}

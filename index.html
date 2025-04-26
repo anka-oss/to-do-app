@@ -14,11 +14,12 @@
         <button id="logout-btn" style="display: none;">Logout</button>
 
         <section id="auth-section">
-            <h2>Login or Sign Up</h2>
-            <input type="email" id="auth-email" placeholder="Email" autofocus/>
-            <input type="password" id="auth-password" placeholder="Password" />
-            <button id="login-btn">Login</button>
-            <button id="signup-btn">Sign Up</button>
+            <h2>Login</h2>
+            <input type="email" id="auth-email" class="input-field" placeholder="Email" autofocus/>
+            <input type="password" id="auth-password" class="input-field" placeholder="Password" />
+            <div>
+              <button id="login-btn">Login</button>
+            </div>
         </section>
 
         <section id="filter-section" class="hidden">
@@ -26,21 +27,21 @@
             <form id="filter-form">
                 <div>
                 <label for="filter-person">Person:</label>
-                <select id="filter-person" name="filterPerson">
+                <select id="filter-person" class="input-field" name="filterPerson">
                     <option value="all">All</option>
-                    <option value="Ania">Ania</option>
-                    <option value="Jacek">Jacek</option>
+                    <option value="Ania">Test Person 1</option>
+                    <option value="Jacek">Test Person 2</option>
                 </select>
                 </div>
 
                 <div>
                 <label for="filter-category">Category:</label>
-                <select id="filter-category" name="filterCategory">
-                    <option value="all">All</option>
-                    <option value="home">Home</option>
-                    <option value="baby">Baby</option>
-                    <option value="dogs">Dogs</option>
-                    <option value="other">Other</option>
+                <select id="filter-category" class="input-field" name="filterCategory">
+                    <option value="All">All</option>
+                    <option value="Home">Home</option>
+                    <option value="Baby">Baby</option>
+                    <option value="Dogs">Dogs</option>
+                    <option value="Other">Other</option>
                 </select>
                 </div>
 
@@ -65,13 +66,21 @@
       <section class="task-form-section">
         <h1>Add a Task</h1>
         <form id="task-form">
-          <input type="text" id="task-title"  name="title" placeholder="Task title" required />
-          <input type="date" id="task-date" name="date" required />
+          <input type="text" id="task-title" class="input-field"  name="title" placeholder="Task title" required />
+          <input type="date" id="task-date" class="input-field" name="date" required />
           
-          <select id="task-person" name="person" required>
+          <select id="task-person" class="input-field" name="person" required>
             <option value="" disabled selected>Assign to</option>
-            <option value="Ania">Ania</option>
-            <option value="Jacek">Jacek</option>
+            <option value="Ania">Test Person 1</option>
+            <option value="Jacek">Test Person 2</option>
+          </select>
+
+          <select id="task-category" class="input-field" name="category" required>
+            <option value="" disabled selected>Select category</option>
+            <option value="Home">Home</option>
+            <option value="Baby">Baby</option>
+            <option value="Dogs">Dogs</option>
+            <option value="Other">Other</option>
           </select>
 
           <label>
@@ -79,21 +88,12 @@
             Repeat
           </label>
 
-          <select id="task-repeat-type" name="repeatType" disabled>
-            <option value="daily">Daily</option>
-            <option value="second">Every Second Day</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
+          <select id="task-repeat-type" class="input-field" name="repeatType" disabled>
+            <option value="Daily">Daily</option>
+            <option value="Every second day">Every Second Day</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Monthly">Monthly</option>
           </select>
-
-          <select id="task-category" name="category" required>
-            <option value="" disabled selected>Select category</option>
-            <option value="home">Home</option>
-            <option value="baby">Baby</option>
-            <option value="dogs">Dogs</option>
-            <option value="other">Other</option>
-          </select>
-
 
           <button type="submit">Add Task</button>
         </form>
